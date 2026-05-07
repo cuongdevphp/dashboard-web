@@ -1,0 +1,122 @@
+<h2>Thu hộ định danh</h2>
+<nz-card>
+    <div class="row m-b-30">
+        <div class="col-lg-10">
+            <div class="d-md-flex">
+                <div class="m-b-10 m-r-20">
+                    <nz-input-group [nzPrefix]="prefixTemplate">
+                        <input type="text" nz-input placeholder="Account Number..." [(ngModel)]="searchAccountNumber" (ngModelChange)="searchAccount()">
+                    </nz-input-group>
+                    <ng-template #prefixTemplate>
+                        <i nz-icon nzType="search" class="opacity-05"></i>
+                    </ng-template>
+                </div> 
+                <div class="m-b-10 m-r-20 d-flex align-items-center">
+                    <nz-select 
+                        style="min-width: 220px;" 
+                        class="w-100" 
+                        nzPlaceHolder="Sub Number" 
+                        [(ngModel)]="selectedSubNumer" 
+                        (ngModelChange)="subNumerChange($event)"
+                    >
+                        <nz-option nzLabel="All" nzValue="All"></nz-option>
+                        <nz-option nzLabel="00" nzValue="00"></nz-option>
+                        <nz-option nzLabel="01" nzValue="01"></nz-option>
+                        <nz-option nzLabel="80" nzValue="80"></nz-option>
+                    </nz-select>
+                </div>
+                <div class="m-b-10 m-r-20 d-flex align-items-center">
+                    <nz-range-picker [nzFormat]="dateFormat" [(ngModel)]="searchDate" (ngModelChange)="onChangeDateRange($event)"></nz-range-picker>
+                </div>
+                <div class="media align-items-center m-r-40 m-v-5">
+                    <div class="font-size-27">
+                        <i class="text-primary" nz-icon nzType="profile" theme="outline"></i>
+                    </div>
+                    <div class="d-flex align-items-center m-l-10">
+                        <h2 class="m-b-0 m-r-5">{{totalMoney | number}}</h2>
+                        <span class="text-gray">VND</span>
+                    </div>
+                </div>
+                <!-- <div class="m-b-10 m-r-20 d-flex align-items-center">
+                    <button nz-button nzType="primary" (click)="showStatisticModal(statisticContent)">
+                        <i nz-icon nzType="pie-chart" nzTheme="outline"></i>
+                        <span>Statistic</span>
+                    </button>
+                </div> -->
+            </div>          
+        </div>
+        <!-- <div class="col-lg-2 text-right" style="display: flex;">
+            <nz-upload
+                nzAction="/assets/upload"
+                nzAccept=".txt"
+                [nzHeaders]="{ authorization: 'authorization-text' }"
+                (nzChange)="uploadFile($event, sendMultipleMessageContent)"
+            >
+                <button nz-button><i nz-icon nzType="upload"></i>Upload</button>
+            </nz-upload>
+            <span style="margin-left: 3px"></span>
+            <button nz-button nzType="primary" (click)="showSendMessageModal(sendMessageContent)">
+                <i nz-icon nzType="plus"></i>
+                <span>Message</span>
+            </button>
+        </div> -->
+    </div>
+    <nz-table 
+        #paymentsListTable 
+        [nzData]="payments"
+        [nzFrontPagination]="false"
+        nzShowSizeChanger
+        [nzLoading]="loading"
+        [nzTotal]="total"
+        [nzPageSize]="pageSize"
+        [nzPageIndex]="pageIndex"
+        (nzQueryParams)="onQueryParamsChange($event)"
+        [nzPageSizeOptions] = "[5, 10, 20, 30, 40, 50]"
+    >
+        <thead>
+            <tr>
+                <th width='1%'>ID</th>
+                <th width='2%'>Account</th>
+                <th width='1%'>Sub</th>
+                <th width='9%'>Amount</th>
+                <th width='10%'>Bank</th>
+                <th width='19%'>Content</th>
+                <th width='7%'>Transaction</th>
+                <th width='15%'>Name Deposit</th>
+                <!-- <th width='14%'>Account Deposit</th> -->
+                <th width='17%'>Error Message</th>
+                <th width='1%'>Status</th>
+                <th width='31%'>CreateDate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of paymentsListTable.data; let i=index">
+                <td>{{item.id}}</td>
+                <td>
+                    {{item.accountNumber}}
+                </td>
+                <td>{{item.subNumber}}</td>
+                <td>{{item.amount | number}}</td>
+                <td>
+                    <img *ngIf="item.bankCode == '0008'" style="width: 100%;" src="assets/images/logo/VPB.png" />
+                    <img *ngIf="item.bankCode == '0310'" style="width: 100%;" src="assets/images/logo/TCB.png" />
+                    <img *ngIf="item.bankCode == '0009'" style="width: 100%;" src="assets/images/logo/VCCB.png" />
+                    <img *ngIf="item.bankCode == '0007'" style="width: 100%;" src="assets/images/logo/ICB.png" />
+                    <img *ngIf="item.bankCode == '0010'" style="width: 100%;" src="assets/images/logo/MSB.png" />
+                    <img *ngIf="item.bankCode == '0013'" style="width: 100%;" src="assets/images/logo/EIB.png" />
+<img *ngIf="item.bankCode == '0003'" style="width: 100%;" src="assets/images/logo/BIDV.png" />
+		</td>
+                <td>{{item.message}}</td>
+                <td>{{item.transactionId}}</td>
+                <td>{{item.nameDeposit}}</td>
+                <!-- <td>{{item.accountBankDeposit}}</td> -->
+                <td>{{item.errorMessage}}</td>
+                <td style="text-align: center;">
+                    <nz-badge *ngIf="item.status == 'SUCCESS'" nzStatus="success"></nz-badge>
+                    <nz-badge *ngIf="item.status == 'MANUAL'" nzStatus="warning" nz-tooltip nzTooltipTitle="{{item.status}}"></nz-badge>
+                </td>
+                <td>{{item.createDate  | date:'dd/MM/YYYY HH:mm:ss.SSS a'}}</td>
+            </tr>
+        </tbody>
+    </nz-table>
+</nz-card>

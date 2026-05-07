@@ -1,0 +1,149 @@
+<h2>Send Notification Follower</h2>
+<nz-card>
+    <div class="row m-b-30">
+        <div class="col-lg-10">
+        </div>
+        <div class="col-lg-2 text-right">
+            <button nz-button nzType="primary" (click)="createTemplateModal('', createTemplateContent)">
+                <i nz-icon nzType="plus"></i>
+                <span>Send</span>
+            </button>
+        </div>
+    </div>
+    <nz-table 
+        #dataMessageFollowerListTable 
+        [nzData]="dataMessageFollower"
+        [nzFrontPagination]="false"
+        nzShowSizeChanger
+        [nzLoading]="loading"
+        [nzTotal]="total"
+        [nzPageSize]="pageSize"
+        [nzPageIndex]="pageIndex"
+        (nzQueryParams)="onQueryParamsChange($event)"
+        [nzPageSizeOptions] = "[5, 10, 20, 30, 40, 50]"
+    >
+        <thead>
+            <tr>
+                <th width='1%'>ID</th>
+                <th width='15%'>Name</th>
+                <th width='10%'>Image</th>
+                <th width='15%'>Link</th>
+                <th width='10%'>Create Date</th>
+                <th width='10%'>Created by</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of dataMessageFollowerListTable.data; let i=index">
+                <td>{{item.id}}</td>
+                <td>
+                    {{item.name}}
+                </td>
+                <td>
+                    <img 
+                        style="cursor: pointer;"
+                        (click)="showImage(item.image, imageContent)"
+                        width="100px"
+                        height="100px"
+                        src={{item.image}}
+                        alt=""
+                    />
+                </td>
+                <td>
+                    <a href={{item.url}} target="_blank">Xem chi tiết</a>
+                </td>
+                <td>
+                    {{ convertDDMMYYYYHHMM(item.createDate) }}
+                </td>
+                <td>
+                    {{item.createBy}}
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+
+    <ng-template #imageContent>
+        <img
+            style="width: 600px;"
+            src={{imageMessageFollow}}
+            alt=""
+        />
+    </ng-template>
+
+    <ng-template #createTemplateContent>
+        <form nz-form nzLayout="vertical" [formGroup]="sendMessageFollowerForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <nz-form-item class="relative">
+                        <nz-form-label nzRequired>Template</nz-form-label>
+                        <nz-form-control nzErrorTip="Please select template!">
+                            <nz-input-group>
+                                <nz-select  
+                                    formControlName="templateMessageFollowerId"
+                                    [(ngModel)]="templateMessageFollowerId" 
+                                    nzShowSearch class="w-100" nzPlaceHolder="Chọn template"
+                                >
+                                    <nz-option 
+                                        *ngFor="let value of lstTemplate" 
+                                        [nzLabel]="value.name"
+                                        [nzValue]="value.id"
+                                    >
+                                    
+                                    </nz-option>
+                                </nz-select>
+                            </nz-input-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-md-6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired>Link</nz-form-label>
+                        <nz-form-control nzErrorTip="Please input link!">
+                            <input type="text" 
+                            formControlName="link" 
+                             [(ngModel)]="link" nz-input placeholder="Please input link" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <nz-form-item class="relative">
+                        <nz-form-label nzRequired>Image</nz-form-label>
+                        <nz-form-control nzErrorTip="Please input name!">
+                            <nz-input-group>
+                                <nz-upload
+                                    nzAccept='.png,.jpeg,.jpg'
+                                    nzAction={{pathUploadImage}}
+                                    nzListType="picture-card"
+                                    [(nzFileList)]="fileList"
+                                    [nzShowButton]="fileList.length < 1"
+                                    [nzPreview]="handlePreview"
+                                    (nzChange)="uploadImages($event)"
+                                >
+                                    <div>
+                                        <i nz-icon nzType="plus"></i>
+                                        <div style="margin-top: 8px">Upload</div>
+                                    </div>
+                                </nz-upload>
+                                <nz-modal
+                                    [nzVisible]="previewVisible"
+                                    [nzContent]="modalContent"
+                                    [nzFooter]="null"
+                                    (nzOnCancel)="previewVisible = false"
+                                >
+                                    <ng-template #modalContent>
+                                    <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />
+                                    </ng-template>
+                                </nz-modal>
+                            </nz-input-group>
+                            <nz-form-explain *ngIf="requiredImage" style="color: red;">
+                                Please upload image!
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+</nz-card>

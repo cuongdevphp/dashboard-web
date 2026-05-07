@@ -1,0 +1,171 @@
+<div class="row">
+    <div class="col-md-12">
+        <nz-card>
+            <nz-spin [nzSpinning]="isSpinningSessionLogin" [nzDelay]="500">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5>Session Login</h5>
+                </div>
+
+                <div class="m-t-50">
+                    <nz-tabset (nzSelectChange)="onChangTabs([$event])" class="page-header-tab">
+                        <nz-tab nzTitle="Date Range" >
+                            <div style="text-align: right;">
+                                <nz-range-picker [nzFormat]="dateFormat" [(ngModel)]="dateRangeSessionLogin" (ngModelChange)="onChangeDateRangeSessionLogin($event)"></nz-range-picker>
+                            </div>
+                            <div>
+                                <canvas 
+                                    height="110px"
+                                    ngChartjs 
+                                    [datasets]="lineChartData" 
+                                    [labels]="lineChartLabels"
+                                    [options]="lineChartOptions" 
+                                    [colors]="lineChartColors" 
+                                    [legend]="lineChartLegend"
+                                    [chartType]="lineChartType"
+                                >
+                                </canvas>
+                            </div>
+                        </nz-tab>
+                        <nz-tab nzTitle="Week/Day">
+                            <div style="display: flex;">
+                                <div class="col-md-12 col-lg-8">
+                                    <nz-card style="height: 578px;">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5>Week</h5>
+                                            <div>
+                                                <nz-date-picker 
+                                                    [nzDisabledDate]="disabledWeekSessionLoginWeek"
+                                                    [nzFormat]="dateFormat" 
+                                                    [(ngModel)]="selectWeekSessionLoginWeek" 
+                                                    (ngModelChange)="onChangeWeekSessionLogin($event)" 
+                                                    nzMode="week"
+                                                ></nz-date-picker>
+                                            </div>
+                                        </div>
+                                        <div class="m-t-50" style="height: 330px">
+                                            <canvas 
+                                                ngChartjs 
+                                                height="110px"
+                                                [datasets]="barChartData" 
+                                                [labels]="barChartLabels"
+                                                [options]="barChartOptions" 
+                                                [colors]="barChartColors"
+                                                [legend]="barChartLegend" 
+                                                [chartType]="barChartType">
+                                            </canvas>
+                                        </div>
+                                    </nz-card>
+                                </div>
+                                <div class="col-md-12 col-lg-4">
+                                    <nz-card>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5>Today</h5>
+                                            <div>
+                                                <span style="cursor: pointer;" nz-tooltip nzTooltipTitle="Refresh" (click)="refresh();">
+                                                    <i nz-icon nzType="sync" nzTheme="outline"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="m-v-60 text-center" style="height: 197px">
+                                            <canvas 
+                                                ngChartjs 
+                                                id="my-doughnut-text-plugin"
+                                                [data]="customersChartData" 
+                                                [labels]="customersChartLabels" 
+                                                [chartType]="customersChartType"
+                                                [inlinePlugins]="pluginsDoughnut"
+                                                [colors]="customersChartColors"
+                                                [options]="customersChartOptions"
+                                                [legend]="false">
+                                            </canvas>
+                                        </div>
+                                        <div class="row border-top p-t-25">
+                                            <div class="col-4">
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="media align-items-center">
+                                                        <nz-badge nzStatus="default" [nzColor]="blue"></nz-badge>
+                                                        <div class="m-l-5">
+                                                            <h4 class="m-b-0">{{doughnutiOS}}</h4>
+                                                            <p class="m-b-0 muted">iOS</p>
+                                                        </div>    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="media align-items-center">
+                                                        <nz-badge nzStatus="default" [nzColor]="lime"></nz-badge>
+                                                        <div class="m-l-5">
+                                                            <h5 class="m-b-0">{{doughnutvPro}}</h5>
+                                                            <p class="m-b-0 muted">vPro</p>
+                                                        </div>    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="media align-items-center">
+                                                        <nz-badge nzStatus="default" [nzColor]="dark"></nz-badge>
+                                                        <div class="m-l-5">
+                                                            <h5 class="m-b-0">{{doughnutQuay}}</h5>
+                                                            <p class="m-b-0 muted">Quầy</p>
+                                                        </div>    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="media align-items-center">
+                                                        <nz-badge nzStatus="default" [nzColor]="cyan"></nz-badge>
+                                                        <div class="m-l-5">
+                                                            <h5 class="m-b-0">{{doughnutWeb}}</h5>
+                                                            <p class="m-b-0 muted">Web</p>
+                                                        </div>    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="media align-items-center">
+                                                        <nz-badge nzStatus="default" [nzColor]="purple"></nz-badge>
+                                                        <div class="m-l-5">
+                                                            <h5 class="m-b-0">{{doughnutiPad}}</h5>
+                                                            <p class="m-b-0 muted">iPad</p>
+                                                        </div>    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="media align-items-center">
+                                                        <nz-badge nzStatus="default" style="margin-left: 21px;" [nzColor]="volcano"></nz-badge>
+                                                        <div class="m-l-5">
+                                                            <h5 class="m-b-0">{{doughnutAndroid}}</h5>
+                                                            <p class="m-b-0 muted">Android</p>
+                                                        </div>    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="media align-items-center">
+                                                        <nz-badge nzStatus="default" style="margin-left: 10px;" [nzColor]="gold"></nz-badge>
+                                                        <div class="m-l-5">
+                                                            <h5 class="m-b-0">{{doughnutTechx}}</h5>
+                                                            <p class="m-b-0 muted">TechX</p>
+                                                        </div>    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </nz-card>
+                                </div>
+                            </div>
+                        </nz-tab>
+                    </nz-tabset>
+                </div>
+            </nz-spin>
+        </nz-card>
+    </div>
+</div>

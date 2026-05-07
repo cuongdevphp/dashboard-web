@@ -1,0 +1,268 @@
+<h2 style="color: white;" class="m-b-20">Thống kê lệnh cơ sở giao dịch trong ngày</h2>
+<div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-3 m-b-15">
+        <nz-card>
+            <div class="media align-items-center">
+                <nz-avatar [nzSize]="60" nzIcon="dollar" class="ant-avatar-red"></nz-avatar>
+                <div class="m-l-15">
+                    <h2 class="m-b-0" style="color: #ff2626; font-size: clamp(1.2rem, 3vw, 1.5rem);">{{totalSellVolumn | number}}</h2>
+                    <p class="m-b-0 text-muted" style="font-size: clamp(0.75rem, 2vw, 0.875rem);"><b>Tổng KL khớp bán</b></p>
+                </div>
+            </div>
+        </nz-card>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-3 m-b-15">
+        <nz-card>
+            <div class="media align-items-center">
+                <nz-avatar [nzSize]="60" nzIcon="dollar" class="ant-avatar-green"></nz-avatar>
+                <div class="m-l-15">
+                    <h2 class="m-b-0" style="color: #32d74b; font-size: clamp(1.2rem, 3vw, 1.5rem);">{{totalBuyVolumn | number}}</h2>
+                    <p class="m-b-0 text-muted" style="font-size: clamp(0.75rem, 2vw, 0.875rem);"><b>Tổng KL khớp mua</b></p>
+                </div>
+            </div>
+        </nz-card>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-3 m-b-15">
+        <nz-card>
+            <div class="media align-items-center">
+                <nz-avatar [nzSize]="60" nzIcon="dollar" class="ant-avatar-red"></nz-avatar>
+                <div class="m-l-15">
+                    <h2 class="m-b-0" style="color: #ff2626; font-size: clamp(1.2rem, 3vw, 1.5rem);">{{totalSellValue | number}}</h2>
+                    <p class="m-b-0 text-muted" style="font-size: clamp(0.75rem, 2vw, 0.875rem);"><b>Tổng GT khớp bán</b></p>
+                </div>
+            </div>
+        </nz-card>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-3 m-b-15">
+        <nz-card>
+            <div class="media align-items-center">
+                <nz-avatar [nzSize]="60" nzIcon="dollar" class="ant-avatar-green"></nz-avatar>
+                <div class="m-l-15">
+                    <h2 class="m-b-0" style="color: #32d74b; font-size: clamp(1.2rem, 3vw, 1.5rem);">{{totalBuyValue | number}}</h2>
+                    <p class="m-b-0 text-muted" style="font-size: clamp(0.75rem, 2vw, 0.875rem);"><b>Tổng GT khớp mua</b></p>
+                </div>
+            </div>
+        </nz-card>
+    </div>
+</div>
+<nz-card>
+    <div class="row m-b-30">
+        <div class="col-12 col-lg-10">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 m-b-10">
+                    <nz-select 
+                        style="width: 100%;"
+                        nzPlaceHolder="Trạng thái" 
+                        [(ngModel)]="searchStatus" 
+                    >
+                        <nz-option nzLabel="All" nzValue="All"></nz-option>
+                        <nz-option *ngFor="let value of filterStatusData" [nzLabel]="value" [nzValue]="value"></nz-option>
+                    </nz-select>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 m-b-10">
+                    <nz-select 
+                        style="width: 100%;"
+                        nzPlaceHolder="Mua/Bán" 
+                        [(ngModel)]="searchBuySell" 
+                    >
+                        <nz-option nzLabel="All" nzValue="All"></nz-option>
+                        <nz-option *ngFor="let value of filterBuySellData" [nzLabel]="value" [nzValue]="value"></nz-option>
+                    </nz-select>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 m-b-10">
+                    <nz-input-group [nzPrefix]="prefixTemplate">
+                        <input 
+                            style="width: 100%;"
+                            type="text" 
+                            nz-input 
+                            placeholder="Mã" 
+                            [(ngModel)]="searchStockCode" 
+                        >
+                    </nz-input-group>
+                    <ng-template #prefixTemplate>
+                        <i nz-icon nzType="search" class="opacity-05"></i>
+                    </ng-template>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 m-b-10">
+                    <nz-input-group [nzPrefix]="prefixTemplate2">
+                        <input 
+                            style="width: 100%;"
+                            type="text" 
+                            nz-input 
+                            placeholder="Tài khoản hoặc tên" 
+                            [(ngModel)]="searchAccountNumber" 
+                        >
+                    </nz-input-group>
+                    <ng-template #prefixTemplate2>
+                        <i nz-icon nzType="search" class="opacity-05"></i>
+                    </ng-template>
+                </div>
+                <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 m-b-10">
+                    <nz-select 
+                        style="width: 100%;"
+                        nzPlaceHolder="Chi nhánh" 
+                        [(ngModel)]="searchBranch" 
+                    >
+                        <nz-option nzLabel="All" nzValue="All"></nz-option>
+                        <nz-option *ngFor="let value of filterBranchData" [nzLabel]="value" [nzValue]="value"></nz-option>
+                    </nz-select>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 m-b-10">
+                    <nz-select 
+                        style="width: 100%;"
+                        nzPlaceHolder="Phòng ban" 
+                        [(ngModel)]="searchRoom" 
+                    >
+                        <nz-option nzLabel="All" nzValue="All"></nz-option>
+                        <nz-option *ngFor="let value of filterRoomData" [nzLabel]="value" [nzValue]="value"></nz-option>
+                    </nz-select>
+                </div> -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 m-b-10">
+                    <nz-date-picker 
+                        style="width: 100%;" 
+                        [nzFormat]="dateFormat" 
+                        [(ngModel)]="searchDate">
+                    </nz-date-picker>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-12 col-lg-2 m-b-10" style="text-align: right;">
+            <button *ngIf="loadingSearch" nz-button nzLoading nzType="primary" nzShape="circle"></button>
+            <button 
+                *ngIf="!loadingSearch"
+                nz-tooltip 
+                nzTooltipTitle="Search" 
+                (click)="paramsFilterChange()"  
+                nz-button nzType="primary" 
+                nzShape="circle">
+                <span nz-icon nzType="search"></span>
+            </button>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <nz-table 
+            nzTableLayout="auto"
+            #templatesListTable 
+            [nzData]="sales"
+            [nzFrontPagination]="false"
+            nzShowSizeChanger
+            [nzLoading]="loading"
+            [nzTotal]="total"
+            [nzPageSize]="pageSize"
+            [nzPageIndex]="pageIndex"
+            (nzQueryParams)="onQueryParamsChange($event)"
+            [nzPageSizeOptions]="[5, 10, 20, 30, 40, 50]"
+            [nzScroll]="{ x: '1400px' }"
+        >
+            <thead>
+                <tr style="font-size: 13px;">
+                    <th nzWidth="80px" style="background-color: #f1f2f3;">SHL</th>
+                    <th nzWidth="120px" style="background-color: #f1f2f3;">Trạng thái</th>
+                    <th nzWidth="120px" style="background-color: #f1f2f3;">Tài khoản</th>
+                    <th nzWidth="80px" style="background-color: #f1f2f3;">Sub</th>
+                    <th nzWidth="150px" style="background-color: #f1f2f3;">Tên</th>
+                    <th nzWidth="100px" style="background-color: #f1f2f3;">Mua/Bán</th>
+                    <th nzWidth="100px" style="background-color: #f1f2f3;">Loại lệnh</th>
+                    <th nzWidth="100px" style="background-color: #f1f2f3;">Mã</th>
+                    <th nzWidth="100px" style="background-color: #f1f2f3;">KL đặt</th>
+                    <th nzWidth="100px" style="background-color: #f1f2f3;">Giá đặt</th>
+                    <th nzWidth="100px" style="background-color: #f1f2f3;">KL khớp</th>
+                    <th nzWidth="100px" style="background-color: #f1f2f3;">Giá khớp</th>
+                    <th nzWidth="120px" style="background-color: #f1f2f3;">GT khớp</th>
+                    <th nzWidth="120px" style="background-color: #f1f2f3;">KL không khớp</th>
+                    <th nzWidth="120px" style="background-color: #f1f2f3;">Thời gian</th>
+                    <th nzWidth="120px" style="background-color: #f1f2f3;">Môi giới</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of templatesListTable.data; let i=index">
+                    <td>{{item.orderNumber}}</td>
+                    <td>
+                        <nz-tag style="font-size: 10px;" *ngIf="item.status == '5'" [nzColor]="'cyan'">
+                            <span>Khớp 1 phần</span>
+                        </nz-tag>
+                        <nz-tag style="font-size: 10px;" *ngIf="item.status == '4'" [nzColor]="'cyan'">
+                            <span>Khớp toàn bộ</span>
+                        </nz-tag>
+                        <nz-tag style="font-size: 10px;" *ngIf="item.status == '3'" [nzColor]="'gold'">
+                            <span>Chờ khớp</span>
+                        </nz-tag>
+                        <nz-tag style="font-size: 10px;" *ngIf="item.status == '0'" [nzColor]="'silver'">
+                            <span>Chờ xử lý</span>
+                        </nz-tag>
+                        <nz-tag style="font-size: 10px;" *ngIf="item.status == 'X'" [nzColor]="'volcano'">
+                            <span>Từ chối</span>
+                        </nz-tag>
+                        <nz-tag style="font-size: 10px;" *ngIf="item.status == '2'" [nzColor]="'gold'">
+                            <span>Tiếp nhận</span>
+                        </nz-tag>
+                    </td>
+                    <td>
+                        {{item.account}}
+                    </td>
+                    <td>
+                        {{item.name}}
+                    </td>
+                    <td>
+                        {{item.CUST_NM}}
+                    </td>
+                    <td>
+                        <b>
+                            <span *ngIf="item.buySell =='1'" style="color: #ff2626;">Bán</span>
+                            <span *ngIf="item.buySell =='2'" style="color: #32d74b;">Mua</span>
+                        </b>
+                    </td>
+                    <td>
+                        <b>
+                            <span *ngIf="item.STK_ORD_TP =='01'" >LO</span>
+                            <span *ngIf="item.STK_ORD_TP =='02'" >MP</span>
+                            <span *ngIf="item.STK_ORD_TP =='03'" >ATO</span>
+                            <span *ngIf="item.STK_ORD_TP =='04'" >ATC</span>
+                            <span *ngIf="item.STK_ORD_TP =='06'" >GDTT</span>
+                            <span *ngIf="item.STK_ORD_TP =='07'" >MOK</span>
+                            <span *ngIf="item.STK_ORD_TP =='08'" >MAK</span>
+                            <span *ngIf="item.STK_ORD_TP =='09'" >MTL</span>
+                            <span *ngIf="item.STK_ORD_TP =='15'" >PLO</span>
+                        </b>
+                    </td>
+                    <td>
+                        {{item.stkcd}}
+                    </td>
+                    <td style="text-align: right;">
+                        {{item['order Quantity'] | number}}
+                    </td>
+                    <td style="text-align: right;">
+                        <span *ngIf="item.STK_ORD_TP =='01'" >{{item.price | number}}</span>
+                        <span *ngIf="item.STK_ORD_TP =='02'" >MP</span>
+                        <span *ngIf="item.STK_ORD_TP =='03'" >ATO</span>
+                        <span *ngIf="item.STK_ORD_TP =='04'" >ATC</span>
+                        <span *ngIf="item.STK_ORD_TP =='06'" >{{item.price | number}}</span>
+                        <span *ngIf="item.STK_ORD_TP =='07'" >MOK</span>
+                        <span *ngIf="item.STK_ORD_TP =='08'" >MAK</span>
+                        <span *ngIf="item.STK_ORD_TP =='09'" >MTL</span>
+                        <span *ngIf="item.STK_ORD_TP =='15'" >{{item.price | number}}</span>
+                    </td>
+                    <td style="text-align: right;">
+                        {{item.MTH_QTY| number}}
+                    </td>
+                    <td style="text-align: right;">
+                        {{item.MTH_AMT/item.MTH_QTY | number}}
+                    </td>
+                    <td style="text-align: right;">
+                        {{item.MTH_AMT | number}}
+                    </td>
+                    <td style="text-align: right;">
+                        {{(item['order Quantity'] - item.MTH_QTY) | number}}
+                    </td>
+                    <td>
+                        {{item.time}}
+                    </td>
+                    <td>
+                        {{item.broker}}
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</nz-card>

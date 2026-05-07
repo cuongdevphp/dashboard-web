@@ -1,0 +1,16 @@
+table:hover,
+tr:hover,
+thead:hover {
+    background: rgb(253, 253, 253) !important;
+}
+
+.ant-table-tbody > tr.ant-table-row:hover > td {
+    background: none !important;
+}
+
+ td {
+    border-bottom: 1px solid #f0f0f0;
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+  }

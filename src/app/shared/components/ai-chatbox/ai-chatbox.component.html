@@ -1,0 +1,114 @@
+<!-- Floating Chat Button -->
+<div class="chat-button" *ngIf="!isOpen" (click)="toggleChat()">
+    <i nz-icon nzType="message" nzTheme="outline"></i>
+    <span class="chat-badge">AI</span>
+</div>
+
+<!-- Chat Window -->
+<div class="chat-window" *ngIf="isOpen" [class.minimized]="isMinimized">
+    <!-- Header -->
+    <div class="chat-header">
+        <div class="chat-header-left">
+            <nz-avatar nzIcon="robot" [nzSize]="32" style="background-color: #3f87f5;"></nz-avatar>
+            <div class="chat-header-info">
+                <h4>AI Assistant</h4>
+                <span class="status-online">
+                    <span class="status-dot"></span>
+                    Online
+                </span>
+            </div>
+        </div>
+        <div class="chat-header-actions">
+            <button 
+                nz-button 
+                nzType="text" 
+                nzSize="small"
+                nz-tooltip
+                nzTooltipTitle="Xóa lịch sử"
+                (click)="clearChat()">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </button>
+            <button 
+                nz-button 
+                nzType="text" 
+                nzSize="small"
+                (click)="toggleMinimize()">
+                <i nz-icon [nzType]="isMinimized ? 'plus' : 'minus'" nzTheme="outline"></i>
+            </button>
+            <button 
+                nz-button 
+                nzType="text" 
+                nzSize="small"
+                (click)="closeChat()">
+                <i nz-icon nzType="close" nzTheme="outline"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Messages Container -->
+    <div class="chat-messages" #messagesContainer *ngIf="!isMinimized">
+        <div 
+            *ngFor="let message of messages" 
+            class="message-wrapper"
+            [class.user-message]="message.isUser"
+            [class.ai-message]="!message.isUser">
+            
+            <div class="message-avatar" *ngIf="!message.isUser">
+                <nz-avatar nzIcon="robot" [nzSize]="28" style="background-color: #3f87f5;"></nz-avatar>
+            </div>
+            
+            <div class="message-content">
+                <!-- Typing Indicator -->
+                <div class="typing-indicator" *ngIf="message.isTyping">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
+                <!-- Actual Message -->
+                <div class="message-bubble" *ngIf="!message.isTyping">
+                    <p>{{ message.content }}</p>
+                    <span class="message-time">{{ formatTime(message.timestamp) }}</span>
+                </div>
+            </div>
+            
+            <div class="message-avatar" *ngIf="message.isUser">
+                <nz-avatar nzIcon="user" [nzSize]="28" style="background-color: #52c41a;"></nz-avatar>
+            </div>
+        </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="chat-input" *ngIf="!isMinimized">
+        <div class="input-wrapper">
+            <textarea
+                nz-input
+                [(ngModel)]="userInput"
+                placeholder="Nhập tin nhắn của bạn..."
+                [nzAutosize]="{ minRows: 1, maxRows: 4 }"
+                (keypress)="onKeyPress($event)"
+                [disabled]="isLoading"
+                class="chat-textarea"
+            ></textarea>
+            <div class="input-actions">
+                <button 
+                    nz-button 
+                    nzType="primary" 
+                    nzShape="circle"
+                    nzSize="large"
+                    [nzLoading]="isLoading"
+                    [disabled]="!userInput.trim() || isLoading"
+                    (click)="sendMessage()"
+                    class="send-button">
+                    <i nz-icon nzType="send" nzTheme="filled" *ngIf="!isLoading"></i>
+                </button>
+            </div>
+        </div>
+        <div class="input-hint">
+            <span class="hint-text">
+                <i nz-icon nzType="enter" nzTheme="outline"></i>
+                Nhấn Enter để gửi, Shift+Enter để xuống dòng
+            </span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,205 @@
+<h2>Check Deal VSD</h2>
+<nz-card>
+    <div class="row m-b-30">
+        <div class="col-lg-10">
+            <div class="m-b-10 m-r-20">
+        <nz-table         
+            [nzData]="arrayHNX"
+            [nzLoading]="loading"
+            [nzTotal]="total"
+            [nzPageSize]="pageSize"
+            [nzPageIndex]="pageIndex"
+            [nzFrontPagination]="false"
+        >
+            <thead>
+                <tr>
+                    <th colspan="1"></th>
+                    <th colspan="2">HoSE</th>
+                    <th colspan="2">HNX</th>
+                    <th colspan="2">Upcom</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>BOS</th>
+                    <th>VSD</th>
+                    <th>BOS</th>
+                    <th>VSD</th>
+                    <th>BOS</th>
+                    <th>VSD</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td>{{valueHoseBos | number: '1.0-2'}}</td>
+                    <td>{{valueHoseVSD | number: '1.0-2'}}</td>
+                    <td>{{valueHnxBos | number: '1.0-2'}}</td>
+                    <td>{{valueHnxVSD | number: '1.0-2'}}</td>
+                    <td>{{valueUpcomBos | number: '1.0-2'}}</td>
+                    <td>{{valueUpcomVSD | number: '1.0-2'}}</td>
+                </tr>
+                <tr>
+                    <td><b>Total</b></td>
+                    <td>0</td>
+                    <td></td>
+                    <td>{{valueHnxBos - valueHnxVSD | number: '1.0-2'}}</td>
+                    <td></td>
+                    <td>0</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </nz-table>
+        </div>
+        </div>
+  
+        <!-- <div class="col-lg-10">
+                <div class="m-b-10 m-r-20">
+                    <nz-row [nzGutter]="100" style="display: ruby-text;">
+                        <nz-col [nzSpan]="50">
+                            <nz-card>
+                            <nz-statistic 
+                                [nzValue]="(valueHoseBos | number: '1.0-2')!"
+                                nzTitle="HoSE BOS"
+                                [nzPrefix]="prefixTplOne"
+                                nzSuffix=""
+                                [nzValueStyle]="{ color: '#3F8600', fontSize: '15px' }"
+                            ></nz-statistic>
+                            <nz-statistic 
+                                [nzValue]="(valueHoseVSD | number: '1.0-2')!"
+                                nzTitle="HoSE VSD"
+                                [nzPrefix]="prefixTplOne"
+                                nzSuffix=""
+                                [nzValueStyle]="{ color: '#3F8600', fontSize: '15px' }"
+                            ></nz-statistic>
+                            <nz-statistic 
+                                [nzValue]="(0 | number: '1.0-2')!"
+                                nzTitle="Total"
+                                [nzPrefix]="prefixTplOne"
+                                nzSuffix=""
+                                [nzValueStyle]="{ color: '#3F8600', fontSize: '15px' }"
+                            ></nz-statistic>
+                            <ng-template #prefixTplOne></ng-template>
+                            </nz-card>
+                        </nz-col>
+                        <nz-col [nzSpan]="50">
+                            <nz-card>
+                            <nz-statistic
+                                [nzValue]="(valueHnxBos | number: '1.0-2')!"
+                                nzTitle="Hnx BOS" 
+                                [nzPrefix]="prefixTplTwo"
+                                nzSuffix=""
+                                [nzValueStyle]="{ color: checkfail ? '#CF1322' : '#3F8600', fontSize: '15px' }"
+                            ></nz-statistic>
+                            <nz-statistic
+                                [nzValue]="(valueHnxVSD | number: '1.0-2')!"
+                                nzTitle="Hnx VSD" 
+                                [nzPrefix]="prefixTplTwo"
+                                nzSuffix=""
+                                [nzValueStyle]="{ color: checkfail ? '#CF1322' : '#3F8600', fontSize: '15px' }"
+                            ></nz-statistic>
+                            <nz-statistic
+                                [nzValue]="(valueHnxBos - valueHnxVSD | number: '1.0-2')!"
+                                nzTitle="Total" 
+                                [nzPrefix]="prefixTplTwo"
+                                nzSuffix=""
+                                [nzValueStyle]="{ color: checkfail ? '#CF1322' : '#3F8600', fontSize: '15px' }"
+                            ></nz-statistic>
+                            <ng-template #prefixTplTwo></ng-template>
+                            </nz-card>
+                        </nz-col>
+                        <nz-col [nzSpan]="50">
+                            <nz-card>
+                            <nz-statistic
+                                [nzValue]="(valueUpcomBos | number: '1.0-2')!"
+                                nzTitle="Upcom BOS" 
+                                [nzPrefix]="prefixTplTwo"
+                                nzSuffix=""
+                                [nzValueStyle]="{ color: '#3F8600', fontSize: '15px' }"
+                            ></nz-statistic>
+                            <nz-statistic
+                                [nzValue]="(valueUpcomVSD | number: '1.0-2')!"
+                                nzTitle="Upcom VSD" 
+                                [nzPrefix]="prefixTplTwo"
+                                nzSuffix=""
+                                [nzValueStyle]="{ color: '#3F8600', fontSize: '15px' }"
+                            ></nz-statistic>
+                            <nz-statistic 
+                                [nzValue]="(0 | number: '1.0-2')!"
+                                nzTitle="Total"
+                                [nzPrefix]="prefixTplOne"
+                                nzSuffix=""
+                                [nzValueStyle]="{ color: '#3F8600', fontSize: '15px' }"
+                            ></nz-statistic>
+                            <ng-template #prefixTplTwo></ng-template>
+                            </nz-card>
+                        </nz-col>
+                    </nz-row>
+                </div>
+        </div> -->
+        <div class="col-lg-2 text-right" style="text-align: right;">
+            <nz-date-picker  [nzFormat]="dateFormat" [(ngModel)]="searchDate"></nz-date-picker>&nbsp;&nbsp;&nbsp;&nbsp;
+            <button *ngIf="loadingSearch" nz-button nzLoading nzType="primary" nzShape="circle"></button>
+            <button 
+                *ngIf="!loadingSearch"
+                nz-tooltip 
+                nzTooltipTitle="Compare file" 
+                (click)="compareFile()"  
+                nz-button nzType="primary" 
+                nzShape="circle">
+                <span nz-icon nzType="search"></span>
+            </button>
+        </div>
+    </div>
+    
+    <nz-table 
+        #paymentsListTable 
+        [nzData]="arrayHNX"
+        [nzLoading]="loading"
+        [nzTotal]="total"
+        [nzPageSize]="pageSize"
+        [nzPageIndex]="pageIndex"
+        [nzFrontPagination]="false"
+    >
+        <thead>
+            <tr>
+                <th width='1%'>#</th>
+                <th width='5%'>Stock Code</th>
+                <th width='5%'>Market</th>
+                <th width='5%'>Account No</th>
+                <th width='5%'>Order Number</th>
+                <th width='5%'>Quantity</th>
+                <th width='5%'>Price</th>
+                <th width='5%'>Type</th>
+                <th width='10%'>Total Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let item of paymentsListTable.data; let i=index">
+                <tr>
+                    <td>{{i+1}}</td>
+                    <td>{{item.stockCode}}</td>
+                    <td>{{item.market}}</td>
+                    <td>{{item.accountNo}}</td>
+                    <td>{{item.orderNumber}}</td>
+                    <td>{{item.qty}}</td>
+                    <td>{{item.price | number: 0}}</td>
+                    <td> 
+                        <b>
+                            <span *ngIf="item.type =='S'" style="color: red;">Sell</span>
+                            <span *ngIf="item.type =='B'" style="color: green;">Buy</span>
+                        </b>
+                    </td>
+                    <td>{{item.value | number: 0}}</td>
+                </tr>
+            </ng-container>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><b>Total</b></td>
+                <td>{{totalQty}}</td>
+            </tr>
+        </tbody>
+    </nz-table>
+</nz-card>
