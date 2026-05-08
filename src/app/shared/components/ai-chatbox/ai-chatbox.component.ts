@@ -154,9 +154,14 @@ export class AiChatboxComponent implements OnInit, AfterViewChecked {
     }
 
     onKeyPress(event: KeyboardEvent): void {
+        // Only handle Enter key when chatbox is open and not minimized
+        if (!this.isOpen || this.isMinimized) {
+            return;
+        }
+        
         if (event.key === 'Enter' && !event.shiftKey) {
-            // event.preventDefault();
-            // this.sendMessage();
+            event.preventDefault();
+            this.sendMessage();
         }
     }
 

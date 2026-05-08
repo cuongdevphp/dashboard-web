@@ -54,7 +54,20 @@ export class SalesComponent implements OnInit {
     
     @HostListener('document:keydown.enter', ['$event'])
     onKeydownHandler(event: KeyboardEvent) {
-        this.paramsFilterChange();
+        // Only trigger when focus is on an input/textarea/select within this component
+        const target = event.target as HTMLElement;
+        const isInputElement = target.tagName === 'INPUT' || 
+                               target.tagName === 'TEXTAREA' || 
+                               target.tagName === 'SELECT' ||
+                               target.hasAttribute('nz-input');
+        
+        // Check if the target element is within this component
+        const isWithinComponent = target.closest('.sales-component') !== null;
+        
+        if (isInputElement && isWithinComponent) {
+            event.preventDefault();
+            this.paramsFilterChange();
+        }
     }
 
     paramsFilterChange(): void {
