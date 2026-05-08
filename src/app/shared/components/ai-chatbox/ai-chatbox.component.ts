@@ -155,8 +155,8 @@ export class AiChatboxComponent implements OnInit, AfterViewChecked {
 
     onKeyPress(event: KeyboardEvent): void {
         if (event.key === 'Enter' && !event.shiftKey) {
-            event.preventDefault();
-            this.sendMessage();
+            // event.preventDefault();
+            // this.sendMessage();
         }
     }
 
