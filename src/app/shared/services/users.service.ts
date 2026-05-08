@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { environment } from '@environments/environment';
 import { MessageIncom } from '../_models/message-incom';
 
 @Injectable({ providedIn: 'root' })
@@ -23,7 +22,7 @@ export class UsersService {
   }
 
   getUsers(pageIndex, pageSize, searchUserName, searchTeam, searchBranch, searchRoom, searchPermission) {
-    return this.http.get<any>(`${environment.apiUrl}/internal/users?offset=${pageIndex}&page=${pageSize}&username=${searchUserName}&team=${searchTeam}&branch=${searchBranch}&room=${searchRoom}&permission=${searchPermission}`);
+    return this.http.get<any>(`http://10.10.10.13:3001/internal/users?offset=${pageIndex}&page=${pageSize}&username=${searchUserName}&team=${searchTeam}&branch=${searchBranch}&room=${searchRoom}&permission=${searchPermission}`);
   }
 
   deleteUser(id, isActive) {
@@ -35,7 +34,7 @@ export class UsersService {
         isActive
       },
     };
-    return this.http.delete<any>(`${environment.apiUrl}/internal/user/${id}`, params)
+    return this.http.delete<any>(`http://10.10.10.13:3001/internal/user/${id}`, params)
   }
 
   updateUser(id, body) {
@@ -45,10 +44,10 @@ export class UsersService {
     //   }),
     //   ...body,
     // };
-    return this.http.put<any>(`${environment.apiUrl}/internal/user/${id}`, body)
+    return this.http.put<any>(`http://10.10.10.13:3001/internal/user/${id}`, body)
   }
 
   createUser(params) {
-    return this.http.post<any>(`${environment.apiUrl}/internal/user`, { ...params })
+    return this.http.post<any>(`http://10.10.10.13:3001/internal/user`, { ...params })
   }
 }

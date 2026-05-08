@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { environment } from '@environments/environment';
 import { MessageIncom } from '../_models/message-incom';
 import { filter } from 'rxjs/operators';
 
@@ -29,15 +28,15 @@ export class IncomService {
   }
 
   getMessages(pageIndex, pageSize, sortField, sortOrder, filterPhone, filterStatus, startDate, endDate) {
-    return this.http.get<MessageIncom>(`${environment.apiUrl}/incom/sendMessageList?offset=${pageIndex}&page=${pageSize}&phonenumber=${filterPhone}&status=${filterStatus}&startDate=${new Date(startDate).toISOString()}&endDate=${new Date(endDate).toISOString()}`);
+    return this.http.get<MessageIncom>(`http://10.10.10.13:3001/incom/sendMessageList?offset=${pageIndex}&page=${pageSize}&phonenumber=${filterPhone}&status=${filterStatus}&startDate=${new Date(startDate).toISOString()}&endDate=${new Date(endDate).toISOString()}`);
   }
 
   getTemplates(pageIndex, pageSize) {
-    return this.http.get<MessageIncom>(`${environment.apiUrl}/incom/template?offset=${pageIndex}&page=${pageSize}`);
+    return this.http.get<MessageIncom>(`http://10.10.10.13:3001/incom/template?offset=${pageIndex}&page=${pageSize}`);
   }
 
   getSendMessageFollower(pageIndex, pageSize) {
-    return this.http.get<MessageIncom>(`${environment.apiUrl}/incom/sendMessageFollower?offset=${pageIndex}&page=${pageSize}`);
+    return this.http.get<MessageIncom>(`http://10.10.10.13:3001/incom/sendMessageFollower?offset=${pageIndex}&page=${pageSize}`);
   }
 
   createTemplate(data) {
@@ -45,7 +44,7 @@ export class IncomService {
       'name': data.name, 
       'template': data.template
     }
-    return this.http.post<any>(`${environment.apiUrl}/incom/template`, { ...params })
+    return this.http.post<any>(`http://10.10.10.13:3001/incom/template`, { ...params })
   }
   
   sendMessageFollower(data) {
@@ -56,7 +55,7 @@ export class IncomService {
       'template_content': data.template_content,
       'template_title': data.template_title,
     }
-    return this.http.post<any>(`${environment.apiUrl}/incom/sendMessageFollower`, { ...params })
+    return this.http.post<any>(`http://10.10.10.13:3001/incom/sendMessageFollower`, { ...params })
   }
 
   uploadImage(data) {
@@ -74,7 +73,7 @@ export class IncomService {
       'name': data.name, 
       'template': data.template
     }
-    return this.http.put<any>(`${environment.apiUrl}/incom/template/${id}`, { ...params })
+    return this.http.put<any>(`http://10.10.10.13:3001/incom/template/${id}`, { ...params })
   }
 
   sendMessage(phoneNumber, contentMessage) {
@@ -86,14 +85,14 @@ export class IncomService {
         'sendstr': contentMessage
       }
     }
-    return this.http.post<any>(`${environment.apiUrl}/incom/sendMessage`, { ...params })
+    return this.http.post<any>(`http://10.10.10.13:3001/incom/sendMessage`, { ...params })
   }
 
   sendMultipleMessage(params) {
-    return this.http.post<any>(`${environment.apiUrl}/incom/new`, { ...params })
+    return this.http.post<any>(`http://10.10.10.13:3001/incom/new`, { ...params })
   }
 
   getStatistic() {
-    return this.http.get<any>(`${environment.apiUrl}/incom/statistic`);
+    return this.http.get<any>(`http://10.10.10.13:3001/incom/statistic`);
   }
 }

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { environment } from '@environments/environment';
 import { MessageIncom } from '../_models/message-incom';
 
 @Injectable({ providedIn: 'root' })
@@ -41,7 +40,7 @@ export class ReportService {
   }
   
   getTradingReport(pageIndex, pageSize, status, type, stockCode, accountNumber, branch, room, date) {
-    return this.http.get<any>(`${environment.apiUrl}/report/orderStock?offset=${pageIndex}&page=${pageSize}&status=${status}&type=${type}&date=${date}&accountNumber=${accountNumber}&stockCode=${stockCode}&branch=${branch}&room=${room}`);
+    return this.http.get<any>(`http://10.10.10.13:3001/report/orderStock?offset=${pageIndex}&page=${pageSize}&status=${status}&type=${type}&date=${date}&accountNumber=${accountNumber}&stockCode=${stockCode}&branch=${branch}&room=${room}`);
   }
 
   getListStockListMargin(searchDate, filterIndustry) {

@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { environment } from '@environments/environment';
 import { filter } from 'rxjs/operators';
 
 // const httpOptions = {
@@ -22,11 +21,11 @@ export class PaymentService {
   }
 
   getPayments(pageIndex, pageSize, sortField, sortOrder, accountNumber, subNumber, startDate, endDate) {
-    return this.http.get(`${environment.apiUrl}/payment/getList?offset=${pageIndex}&page=${pageSize}&accountNumber=${accountNumber}&subNumber=${subNumber}&startDate=${new Date(startDate).toISOString()}&endDate=${new Date(endDate).toISOString()}`);
+    return this.http.get(`http://10.10.10.13:3001/payment/getList?offset=${pageIndex}&page=${pageSize}&accountNumber=${accountNumber}&subNumber=${subNumber}&startDate=${new Date(startDate).toISOString()}&endDate=${new Date(endDate).toISOString()}`);
   }
 
   getWithdraws(pageIndex, pageSize, sortField, sortOrder, accountName, status, amount, startDate, endDate) {
-    return this.http.get(`${environment.apiUrl}/payment/withdraw/getList?offset=${pageIndex}&page=${pageSize}&accountName=${accountName}&status=${status}&amount=${amount}&startDate=${new Date(startDate).toISOString()}&endDate=${new Date(endDate).toISOString()}`);
+    return this.http.get(`http://10.10.10.13:3001/payment/withdraw/getList?offset=${pageIndex}&page=${pageSize}&accountName=${accountName}&status=${status}&amount=${amount}&startDate=${new Date(startDate).toISOString()}&endDate=${new Date(endDate).toISOString()}`);
   }
 
   getBanks() {
@@ -35,11 +34,11 @@ export class PaymentService {
   }
 
   searchAccountNumber(accountNumber) {
-    return this.http.get(`${environment.apiUrl}/payment/checkAccountNumber?accountNumber=${accountNumber}`);
+    return this.http.get(`http://10.10.10.13:3001/payment/checkAccountNumber?accountNumber=${accountNumber}`);
   }
 
   getSMSTpLink(pageIndex, pageSize, bankCode, type, status, startDate, endDate) {
-    return this.http.get(`${environment.apiUrl}/payment/tpLink/getSMS?offset=${pageIndex}&type=${type}&status=${status}&bankCode=${bankCode}&page=${pageSize}&startDate=${new Date(startDate).toISOString()}&endDate=${new Date(endDate).toISOString()}`);
+    return this.http.get(`http://10.10.10.13:3001/payment/tpLink/getSMS?offset=${pageIndex}&type=${type}&status=${status}&bankCode=${bankCode}&page=${pageSize}&startDate=${new Date(startDate).toISOString()}&endDate=${new Date(endDate).toISOString()}`);
   }
 
   generateVietQrCode(data) {
@@ -63,31 +62,31 @@ export class PaymentService {
       idx: data.idx,
       content: data.content
     }
-    return this.http.post<any>(`${environment.apiUrl}/payment/tpLink/action`, { ...params })
+    return this.http.post<any>(`http://10.10.10.13:3001/payment/tpLink/action`, { ...params })
   }
 
   compareFileDeal(date) {
-    return this.http.get<any>(`${environment.apiUrl}/incom/sokhopdeal?date=${date}`);
+    return this.http.get<any>(`http://10.10.10.13:3001/incom/sokhopdeal?date=${date}`);
   }
 
   exportExcel(data) {
     const params = {
       arrData: data
     }
-    return this.http.post<any>(`${environment.apiUrl}/payment/tpLink/exportExcel`, { ...params })
+    return this.http.post<any>(`http://10.10.10.13:3001/payment/tpLink/exportExcel`, { ...params })
   }
 
   genToken(branchUser) {
     const params = {
       branchUser
     }
-    return this.http.post<any>(`${environment.apiUrl}/payment/genToken`, {...params})
+    return this.http.post<any>(`http://10.10.10.13:3001/payment/genToken`, {...params})
   }
 
   actionCancelDeal(idx) {
     const params = {
       idx,
     }
-    return this.http.post<any>(`${environment.apiUrl}/payment/tpLink/actionCancel`, { ...params })
+    return this.http.post<any>(`http://10.10.10.13:3001/payment/tpLink/actionCancel`, { ...params })
   }
 }

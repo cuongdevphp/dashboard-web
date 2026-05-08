@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { environment } from '@environments/environment';
 import { MessageIncom } from '../_models/message-incom';
 
 @Injectable({ providedIn: 'root' })
@@ -23,7 +22,7 @@ export class TemplateService {
   }
 
   getTemplates(pageIndex, pageSize) {
-    return this.http.get<any>(`${environment.apiUrl}/template/email?offset=${pageIndex}&page=${pageSize}`);
+    return this.http.get<any>(`http://10.10.10.13:3001/template/email?offset=${pageIndex}&page=${pageSize}`);
   }
 
   deleteUser(id, isActive) {
@@ -35,7 +34,7 @@ export class TemplateService {
         isActive
       },
     };
-    return this.http.delete<any>(`${environment.apiUrl}/internal/user/${id}`, params)
+    return this.http.delete<any>(`http://10.10.10.13:3001/internal/user/${id}`, params)
   }
 
   updateTemplate(id, body) {
@@ -45,10 +44,10 @@ export class TemplateService {
       }),
       ...body,
     };
-    return this.http.post<any>(`${environment.apiUrl}/template/email/${id}`, params)
+    return this.http.post<any>(`http://10.10.10.13:3001/template/email/${id}`, params)
   }
 
   createUser(params) {
-    return this.http.post<any>(`${environment.apiUrl}/internal/user`, { ...params })
+    return this.http.post<any>(`http://10.10.10.13:3001/internal/user`, { ...params })
   }
 }
