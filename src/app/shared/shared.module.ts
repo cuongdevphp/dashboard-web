@@ -5,6 +5,9 @@ import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from "@angular/router";
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ThemeConstantService } from './services/theme-constant.service';
 import { SearchPipe } from './pipes/search.pipe';
@@ -33,11 +36,15 @@ import { AiChatboxComponent } from './components/ai-chatbox/ai-chatbox.component
     imports: [
         RouterModule,
         CommonModule,
+        FormsModule,
         NzIconModule,
         NzCardModule,
         NzGridModule,
         NzStatisticModule,
         NzToolTipModule,
+        NzAvatarModule,
+        NzButtonModule,
+        NzInputModule,
         PerfectScrollbarModule,
         CKEditorModule
     ],

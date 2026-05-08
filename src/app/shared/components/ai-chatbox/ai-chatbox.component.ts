@@ -20,7 +20,7 @@ export class AiChatboxComponent implements OnInit, AfterViewChecked {
     isOpen = false;
     isMinimized = false;
     messages: Message[] = [];
-    userInput = '';
+    userInput: string = '';
     isLoading = false;
     private shouldScrollToBottom = false;
 
@@ -29,7 +29,7 @@ export class AiChatboxComponent implements OnInit, AfterViewChecked {
     ngOnInit(): void {
         // Welcome message
         this.messages.push({
-            content: 'Xin chào! Tôi là AI Assistant. Tôi có thể giúp gì cho bạn?',
+            content: 'Xin chào! Tôi là AI Vietcap. Tôi có thể giúp gì cho bạn?',
             isUser: false,
             timestamp: new Date()
         });
@@ -162,7 +162,7 @@ export class AiChatboxComponent implements OnInit, AfterViewChecked {
 
     clearChat(): void {
         this.messages = [{
-            content: 'Xin chào! Tôi là AI Assistant. Tôi có thể giúp gì cho bạn?',
+            content: 'Xin chào! Tôi là AI Vietcap. Tôi có thể giúp gì cho bạn?',
             isUser: false,
             timestamp: new Date()
         }];

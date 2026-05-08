@@ -75,7 +75,7 @@
 
 /* Header */
 .chat-header {
-    background: linear-gradient(135deg, #3f87f5 0%, #2563d4 100%);
+    background: linear-gradient(135deg, #3f87f5 0%, #25d432 100%);
     color: white;
     padding: 16px;
     display: flex;
@@ -155,7 +155,7 @@
     transform: translate(-50%, -50%);
     width: 200px;
     height: 200px;
-    background-image: url('/assets/images/logo/logo.png');
+    background-image: url('/assets/images/logo/vcsc-logo.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -231,7 +231,7 @@
 }
 
 .user-message .message-bubble {
-    background: linear-gradient(135deg, #3f87f5 0%, #2563d4 100%);
+    background: linear-gradient(135deg, #3f87f5 0%, #1d67f5 100%);
     color: white;
     border-radius: 12px 12px 4px 12px;
 }
@@ -241,6 +241,14 @@
     font-size: 14px;
     line-height: 1.6;
     white-space: pre-wrap;
+}
+
+.ai-message .message-bubble p {
+    color: black;
+}
+
+.user-message .message-bubble p {
+    color: white;
 }
 
 .message-time {
@@ -348,7 +356,7 @@
 .send-button {
     width: 44px;
     height: 44px;
-    background: linear-gradient(135deg, #3f87f5 0%, #2563d4 100%);
+    background: linear-gradient(135deg, #3f87f5 0%, #25d428 100%);
     border: none;
     box-shadow: 0 2px 8px rgba(63, 135, 245, 0.3);
     transition: all 0.3s ease;

@@ -11,7 +11,7 @@
         <div class="chat-header-left">
             <nz-avatar nzIcon="robot" [nzSize]="32" style="background-color: #3f87f5;"></nz-avatar>
             <div class="chat-header-info">
-                <h4>AI Assistant</h4>
+                <h4>AI Vietcap</h4>
                 <span class="status-online">
                     <span class="status-dot"></span>
                     Online
@@ -81,8 +81,11 @@
     <!-- Input Area -->
     <div class="chat-input" *ngIf="!isMinimized">
         <div class="input-wrapper">
+            <!-- [(ngModel)]="searchStockCode" 
+            <textarea name="contentMessage" [(ngModel)]="contentMessage" placeholder="Please input content message" nz-input></textarea> -->
             <textarea
                 nz-input
+                name="userInput"
                 [(ngModel)]="userInput"
                 placeholder="Nhập tin nhắn của bạn..."
                 [nzAutosize]="{ minRows: 1, maxRows: 4 }"
@@ -91,6 +94,7 @@
                 class="chat-textarea"
             ></textarea>
             <div class="input-actions">
+                <!-- [disabled]="!userInput.trim() || isLoading" -->
                 <button 
                     nz-button 
                     nzType="primary" 
@@ -100,7 +104,9 @@
                     [disabled]="!userInput.trim() || isLoading"
                     (click)="sendMessage()"
                     class="send-button">
-                    <i nz-icon nzType="send" nzTheme="filled" *ngIf="!isLoading"></i>
+                    <!-- <nz-icon nzType="send" nzTheme="outline" />
+                    <nz-icon nzType="send" nzTheme="outline" /> -->
+                    <i nz-icon nzType="send" nzTheme="outline" *ngIf="!isLoading"></i>
                 </button>
             </div>
         </div>
