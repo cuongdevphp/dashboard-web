@@ -62,6 +62,29 @@
     height: 60px;
 }
 
+.chat-window.fullscreen {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    border-radius: 0 !important;
+    z-index: 1001;
+}
+
+.chat-window.fullscreen .chat-header {
+    border-radius: 0;
+}
+
+.chat-window.fullscreen .chat-input {
+    border-radius: 0;
+}
+
+.chat-window.fullscreen .message-content {
+    max-width: 60%;
+}
+
 @keyframes slideUp {
     from {
         opacity: 0;

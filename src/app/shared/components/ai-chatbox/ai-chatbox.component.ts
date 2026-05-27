@@ -19,6 +19,7 @@ export class AiChatboxComponent implements OnInit, AfterViewChecked {
     
     isOpen = false;
     isMinimized = false;
+    isFullscreen = false;
     messages: Message[] = [];
     userInput: string = '';
     isLoading = false;
@@ -54,9 +55,15 @@ export class AiChatboxComponent implements OnInit, AfterViewChecked {
         this.isMinimized = !this.isMinimized;
     }
 
+    toggleFullscreen(): void {
+        this.isFullscreen = !this.isFullscreen;
+        this.shouldScrollToBottom = true;
+    }
+
     closeChat(): void {
         this.isOpen = false;
         this.isMinimized = false;
+        this.isFullscreen = false;
     }
 
     async sendMessage(): Promise<void> {
@@ -126,7 +133,7 @@ export class AiChatboxComponent implements OnInit, AfterViewChecked {
             // Call backend API
             const response = await this.http.post<any>(
                 // environment.aiApiUrl,
-                "localhost:3001",
+                "http://localhost:3001/api/chat",
                 {
                     message: message,
                     userId: userId
