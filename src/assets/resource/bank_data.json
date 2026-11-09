@@ -147,11 +147,11 @@
             "name": "Ngân hàng TMCP Sài Gòn Thương Tín",
             "code": "STB",
             "bin": "970403",
-            "shortName": "Sacombank",
+            "shortName": "SACOMBANK",
             "logo": "assets/images/logo/STB.png",
             "transferSupported": 1,
             "lookupSupported": 1,
-            "short_name": "Sacombank",
+            "short_name": "SACOMBANK",
             "support": 3,
             "isTransfer": 1,
             "swift_code": "SGTTVNVX"
