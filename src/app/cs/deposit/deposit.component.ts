@@ -271,7 +271,7 @@ export class DepositComponent implements OnInit {
             case 'ACB':
                 result = `+${this.formatterNumber(amount)}VND${str.split("GD:")[1]}`;
                 break;
-            case 'Sacombank':
+            case 'SACOMBANK':
                 result = `+${this.formatterNumber(amount)}VND ${str.split("VND\n")[2]}`;
                 break;
             // case 'BanVietBank':
@@ -317,7 +317,7 @@ export class DepositComponent implements OnInit {
                         el.shortName === "Vietcombank" || //
                         el.shortName === "ACB" || // 
                         el.shortName === "HDBank" || //
-                        el.shortName === "Sacombank" || //
+                        el.shortName === "SACOMBANK" || //
                         el.shortName === "VIB" || //
                         el.shortName === "Eximbank"
                     ); 
