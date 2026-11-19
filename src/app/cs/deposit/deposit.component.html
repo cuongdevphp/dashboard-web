@@ -71,6 +71,15 @@
             </div>
         </div>
         <div class="col-lg-2 text-right" style="text-align: right;">
+            <button 
+                nz-tooltip 
+                nzTooltipTitle="Manual deposit" 
+                (click)="manualModal(createManualContent)"  
+                nz-button nzType="primary" 
+                nzShape="circle">
+                <span nz-icon nzType="plus"></span>
+            </button>
+            &nbsp;
             <button *ngIf="loadingGenToken" nz-button nzLoading nzType="primary" nzShape="circle"></button>
             <button 
                 *ngIf="!loadingGenToken"
@@ -332,6 +341,122 @@
                             {{sendItemDeposit.message}}
                             <!-- <textarea readonly name="sendItemDeposit.message"  [nzAutosize]="{ minRows: 3, maxRows: 3 }" [(ngModel)]="sendItemDeposit.message" nz-input></textarea> -->
                         </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </form>
+</ng-template>
+
+<ng-template #createManualContent>
+    <form nz-form nzLayout="vertical">
+        <div class="row">
+            <div class="col-md-12">
+                <nz-form-item class="relative">
+                    <nz-form-label nzRequired>Bank Code</nz-form-label>
+                    <nz-form-control>
+                        <nz-select
+                            class="w-100"
+                            name="sendItemManual.bankCode"
+                            nzPlaceHolder="Please select bank code"
+                            [(ngModel)]="sendItemManual.bankCode"
+                        >
+                            <nz-option
+                                nzCustomContent
+                                *ngFor="let value of banks"
+                                [nzLabel]="value.name"
+                                [nzValue]="value.shortName"
+                            >
+                                <img style="width: 60px;" [src]="value.logo">
+                                {{value.name}}
+                            </nz-option>
+                        </nz-select>
+                        <div *ngIf="requiredFormManual.bankCode" style="color: red;">
+                            Please select bank code!
+                        </div>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <nz-form-item class="relative">
+                    <nz-form-label nzRequired>Account Number</nz-form-label>
+                    <nz-form-control>
+                        <nz-input-group>
+                            <input type="text" name="sendItemManual.accountNumber" [(ngModel)]="sendItemManual.accountNumber" nz-input placeholder="Please input account number" />
+                        </nz-input-group>
+                        <div *ngIf="requiredFormManual.accountNumber" style="color: red;">
+                            Please input account number!
+                        </div>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-2">
+                <nz-form-item class="relative">
+                    <nz-form-label nzRequired>Sub Number</nz-form-label>
+                    <nz-form-control>
+                        <nz-input-group>
+                            <input type="text" name="sendItemManual.subNumber" [(ngModel)]="sendItemManual.subNumber" nz-input placeholder="Please input sub number" />
+                        </nz-input-group>
+                        <div *ngIf="requiredFormManual.subNumber" style="color: red;">
+                            Please input sub number!
+                        </div>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-4">
+                <nz-form-item class="relative">
+                    <nz-form-label nzRequired>Amount</nz-form-label>
+                    <nz-form-control>
+                        <nz-input-group>
+                            <nz-input-number
+                                style="width: 100%"
+                                [nzMin]="0"
+                                [nzPrecision]="0"
+                                [nzFormatter]="formatterNumber"
+                                name="sendItemManual.amount"
+                                nzPlaceHolder="Please input amount"
+                                [(ngModel)]="sendItemManual.amount"
+                            ></nz-input-number>
+                        </nz-input-group>
+                        <div *ngIf="requiredFormManual.amount" style="color: red;">
+                            Please input amount!
+                        </div>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-3">
+                <nz-form-item class="relative">
+                    <nz-form-label nzRequired>Account Bank</nz-form-label>
+                    <nz-form-control>
+                        <nz-input-group>
+                            <input type="text" name="sendItemManual.accountBank" [(ngModel)]="sendItemManual.accountBank" nz-input placeholder="Please input account bank" />
+                        </nz-input-group>
+                        <div *ngIf="requiredFormManual.accountBank" style="color: red;">
+                            Please input account bank!
+                        </div>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <nz-form-item class="relative">
+                    <nz-form-label nzRequired>Content</nz-form-label>
+                    <nz-form-control>
+                        <nz-input-group>
+                            <textarea
+                                name="sendItemManual.content"
+                                [nzAutosize]="{ minRows: 3, maxRows: 3 }"
+                                [(ngModel)]="sendItemManual.content"
+                                placeholder="Please input content"
+                                nz-input
+                            ></textarea>
+                        </nz-input-group>
+                        <div *ngIf="requiredFormManual.content" style="color: red;">
+                            Please input content!
+                        </div>
                     </nz-form-control>
                 </nz-form-item>
             </div>

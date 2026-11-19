@@ -59,6 +59,7 @@ export class PaymentService {
       subNumber: data.subNumber,
       amount: data.amount,
       accountBank: data.accountBank,
+      bankCode: data.bankCode,
       idx: data.idx,
       content: data.content
     }

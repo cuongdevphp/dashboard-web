@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { cloneDeep } from "lodash";
@@ -38,6 +38,10 @@ export class DepositComponent implements OnInit {
         amount: false,
         content: false,
     };
+    loadingManualModal = false;
+    manualModalRef: NzModalRef = null;
+    sendItemManual: any = this.emptyManualItem();
+    requiredFormManual: any = this.emptyManualRequired();
     constructor(
         private notification: NzNotificationService,
         private paymentService: PaymentService,
@@ -258,6 +262,116 @@ export class DepositComponent implements OnInit {
             amount: false,
             content: false,
         };
+    }
+
+    emptyManualItem(): any {
+        return {
+            bankCode: '',
+            accountNumber: '',
+            subNumber: '01',
+            accountBank: '',
+            amount: '',
+            content: '',
+        };
+    }
+
+    emptyManualRequired(): any {
+        return {
+            bankCode: false,
+            accountNumber: false,
+            subNumber: false,
+            accountBank: false,
+            amount: false,
+            content: false,
+        };
+    }
+
+    resetManualModal(): void {
+        this.loadingManualModal = false;
+        this.sendItemManual = this.emptyManualItem();
+        this.requiredFormManual = this.emptyManualRequired();
+    }
+
+    manualModal(createManualContent: TemplateRef<{}>): void {
+        this.resetManualModal();
+        this.manualModalRef = this.modalService.create({
+            nzMaskClosable: false,
+            nzTitle: 'Manual deposit',
+            nzContent: createManualContent,
+            nzFooter: [
+                {
+                    label: 'Submit',
+                    type: 'primary',
+                    loading: () => this.loadingManualModal,
+                    onClick: () => {
+                        this.submitManual();
+                    },
+                },
+            ],
+            nzWidth: 800,
+        });
+    }
+
+    submitManual(): void {
+        if (this.loadingManualModal) {
+            return;
+        }
+        const item = this.sendItemManual;
+        const params = {
+            idx: '',
+            bankCode: item.bankCode || '',
+            accountNumber: `${item.accountNumber || ''}`.trim().toUpperCase(),
+            subNumber: `${item.subNumber || ''}`.trim(),
+            accountBank: `${item.accountBank || ''}`.trim(),
+            amount: item.amount,
+            content: `${item.content || ''}`.trim(),
+        };
+        this.requiredFormManual = {
+            bankCode: !params.bankCode,
+            accountNumber: !params.accountNumber,
+            subNumber: !params.subNumber,
+            accountBank: !params.accountBank,
+            amount: !params.amount,
+            content: !params.content,
+        };
+        const hasMissing = Object.keys(this.requiredFormManual).some(key => this.requiredFormManual[key]);
+        if (!hasMissing) {
+            this.actionManual(params);
+        }
+    }
+
+    actionManual(params: any): void {
+        const modalRef = this.manualModalRef;
+        this.loadingManualModal = true;
+        this.paymentService.actionSIM(params)
+        .subscribe(
+            (result: any) => {
+                this.loadingManualModal = false;
+                if (result.success) {
+                    this.notification.create(
+                        'success',
+                        'Notification',
+                        result.message
+                    );
+                    this.loadWithdrawList(this.pageIndex, this.pageSize, this.bankCode, this.selectedType, this.selectedStatus, this.searchDate[0], this.searchDate[1]);
+                    modalRef.close();
+                } else {
+                    this.notification.create(
+                        'error',
+                        'Notification',
+                        result.message
+                    );
+                }
+            },
+            (error: any) => {
+                this.loadingManualModal = false;
+                this.notification.create(
+                    'error',
+                    'Notification',
+                    (error && error.error && error.error.message) || 'Request failed'
+                );
+            }
+        );
     }
     
     formatterNumber = (value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');

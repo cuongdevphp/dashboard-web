@@ -4,7 +4,8 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ReportService } from 'src/app/shared/services/report.service';
 declare var $: any; // JQuery
 @Component({
-    templateUrl: './sales.component.html'
+    templateUrl: './sales.component.html',
+    styleUrls: ['./sales.component.css']
 })
 
 export class SalesComponent implements OnInit {
@@ -32,6 +33,7 @@ export class SalesComponent implements OnInit {
     totalSellValue: any = '';
     totalBuyValue: any = '';
     loadingSearch = false;
+    fiinmanLoading = true;
 
     filterRoomData: any = ['001-01', '001-02', '001-03', '001-04', '001-05', '001-06', '001-07', '001-08', '001-09', '001-10', '002-01', '002-02', '002-03', '002-04', '002-05', '002-06'];
     filterUserData: any = null;
@@ -169,5 +171,16 @@ export class SalesComponent implements OnInit {
 
     parseInt = (num) => {
         return parseInt(num);
+    }
+
+    reloadFiinman(frame: HTMLIFrameElement): void {
+        this.fiinmanLoading = true;
+        // Re-assigning src reloads the frame (back to the Fiinman home page).
+        frame.src = frame.src;
+    }
+
+    openFiinman(): void {
+        // noopener + noreferrer: the new tab gets no handle to this dashboard and no Referer.
+        window.open('https://fiinman.com/', '_blank', 'noopener,noreferrer');
     }
 }

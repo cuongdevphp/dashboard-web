@@ -267,4 +267,37 @@
         </nz-table>
     </div>
 </nz-card>
+
+<nz-card nzSize="small" [nzTitle]="fiinmanTitle" [nzExtra]="fiinmanExtra" [nzBodyStyle]="{ padding: '0' }">
+    <div class="fiinman-frame-wrap">
+        <iframe
+            #fiinmanFrame
+            class="fiinman-frame"
+            title="Fiinman"
+            src="https://fiinman.com/"
+            loading="lazy"
+            referrerpolicy="no-referrer"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
+            (load)="fiinmanLoading = false"
+        ></iframe>
+        <div class="fiinman-loading" role="status" *ngIf="fiinmanLoading">
+            <nz-spin nzSimple nzSize="large"></nz-spin>
+            <span class="fiinman-loading-text">Đang tải Fiinman...</span>
+        </div>
+    </div>
+</nz-card>
+<ng-template #fiinmanTitle>
+    <span nz-icon nzType="line-chart" class="m-r-10"></span><b>Fiinman</b>
+    <small class="text-muted m-l-10 d-none d-sm-inline">fiinman.com</small>
+</ng-template>
+<ng-template #fiinmanExtra>
+    <button nz-button nzSize="small" class="m-r-10" (click)="reloadFiinman(fiinmanFrame)">
+        <span nz-icon nzType="reload"></span>
+        Tải lại
+    </button>
+    <button nz-button nzSize="small" (click)="openFiinman()">
+        <span nz-icon nzType="export"></span>
+        Mở tab mới
+    </button>
+</ng-template>
 </div>
